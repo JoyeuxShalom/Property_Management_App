@@ -1,6 +1,3 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/IplgRMLO)
-[![Open in Codespaces](https://classroom.github.com/assets/launch-codespace-2972f46106e565e64193e422d61a12cf1da4916b45550586e14ef0a7c637dd04.svg)](https://classroom.github.com/open-in-codespaces?assignment_repo_id=17543049)
-**Assignment Title:** Improved Property Management System with User Interface and Features
 
 **Learning Objectives:**
 
@@ -10,7 +7,7 @@
 * Understand the importance of user experience (UX) in web application design.
 * Further practice collaboration and Git workflow.
 
-**Assignment Description:**
+**Task Description:**
 
 Building on the models created in the previous assignment, you will now develop the front-end and user interface for the property management system. This involves creating Django templates, integrating user authentication, implementing search and filtering functionality, and designing dashboards for different user types.
 
@@ -41,9 +38,3 @@ Building on the models created in the previous assignment, you will now develop 
     *   Ensure the UI is responsive and user-friendly across different devices.
     *   Write clean, well-documented, and maintainable code.
 
-**Grading Rubric:**
-
-*   **Functionality (50%):**  All required features are implemented correctly and efficiently.
-*   **UI/UX Design (20%):** The interface is visually appealing, user-friendly, and intuitive.
-*   **Code Quality (15%):** Code is well-organized, readable, follows PEP 8 guidelines, and is properly documented.
-*   **GitHub Usage (15%):**  Consistent commits, clear commit messages, and effective collaboration demonstrated through the Git history.
