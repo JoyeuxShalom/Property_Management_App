@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <style>
+        .navbar {
+            background-color: #2e8b57;
+        }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+        }
+        .dropdown-menu {
+            min-width: 200px;
+        }
+        .card {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg p-3">
+        <div class="container">
+            <a class="navbar-brand" href="#">Welcome to Property Management</a>
+            <div class="dropdown ms-auto">
+                <button class="btn btn-success dropdown-toggle" type="button" id="dashboardDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    Dashboard
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dashboardDropdown">
+                    <li><a class="dropdown-item" href="{% url 'admin-dashboard' %}">Admin Dashboard</a></li>
+                    <li><a class="dropdown-item" href="{% url 'landlord-dashboard' %}">Landlord Dashboard</a></li>
+                    <li><a class="dropdown-item" href="{% url 'tenant-dashboard' %}">Tenant Dashboard</a></li> <!-- Link to tenant dashboard -->
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="mt-4">Welcome, {{ request.user.username }}!</h2>
+                <p>Your role is: {{ role }}</p>
+                <p>Here is your dashboard.</p>
+
+                <!-- Tenant Dashboard Content -->
+                {% if role == 'tenant' %}
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Your Lease Details</h4>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Lease ID:</strong> {{ tenant.lease_id }}</p>
+                        <p><strong>Property:</strong> {{ tenant.property.name }}</p>
+                        <p><strong>Lease Start Date:</strong> {{ tenant.lease_start_date }}</p>
+                        <p><strong>Lease End Date:</strong> {{ tenant.lease_end_date }}</p>
+                        <p><strong>Status:</strong> {{ tenant.status }}</p>
+                        <a href="{% url 'submit-maintenance-request' %}" class="btn btn-primary">Submit Maintenance Request</a>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer bg-dark text-white text-center py-3">
+        <p>&copy; 2024 Property Management</p>
+    </footer>
+
+    <!-- Bootstrap JS (for dropdown functionality) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

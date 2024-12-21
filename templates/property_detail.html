@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ property.name }} Details</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f4f8f4;
+            color: #2e8b57;
+        }
+        .navbar {
+            background-color: #2e8b57;
+            color: white;
+        }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+        }
+        .content {
+            padding: 40px;
+        }
+        .property-image {
+            width: 100%;
+            height: auto;
+        }
+        .property-details h3 {
+            margin-top: 20px;
+        }
+        .footer {
+            background-color: #2e8b57;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: sticky;
+            bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg p-3">
+        <div class="container">
+            <a class="navbar-brand" href="#">Property Listings</a>
+        </div>
+    </nav>
+
+    <div class="content container">
+        <div class="row">
+            <div class="col-md-6">
+                <!-- Property Image Gallery -->
+                <div id="propertyImages" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        {% for image in property.images.all %}
+                        <div class="carousel-item {% if forloop.first %} active {% endif %}">
+                            <img src="{{ image.image.url }}" class="d-block w-100 property-image" alt="{{ property.name }}">
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#propertyImages" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#propertyImages" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="property-details">
+                    <h2>{{ property.name }}</h2>
+                    <p><strong>Address:</strong> {{ property.address }}</p>
+                    <p><strong>Type:</strong> {{ property.property_type }}</p>
+                    <p><strong>Rent:</strong> ${{ property.rent }} / month</p>
+                    <p><strong>Bedrooms:</strong> {{ property.bedrooms }}</p>
+                    <p><strong>Bathrooms:</strong> {{ property.bathrooms }}</p>
+                    <p><strong>Additional Info:</strong> {{ property.additional_info }}</p>
+                    <a href="#" class="btn btn-success">Contact Agent</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2024 Property Listings Taskmasters. All Rights Reserved.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

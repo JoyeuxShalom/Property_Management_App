@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Property Management</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .navbar-custom {
+            background-color: #2e8b57; /* Dark Green */
+        }
+
+        .navbar-custom .navbar-brand,
+        .navbar-custom .navbar-nav .nav-link {
+            color: white;
+            font-weight: bold;
+        }
+
+        .navbar-custom .navbar-nav .nav-link:hover {
+            color: #d4edda; /* Light Green */
+        }
+
+        .hero-section {
+            background-color: #f8f9fa;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .hero-section h1 {
+            font-size: 2.5rem;
+            color: #2e8b57;
+        }
+
+        .hero-section p {
+            font-size: 1.2rem;
+            color: #555;
+        }
+
+        .btn-custom {
+            margin: 10px;
+            padding: 12px 20px;
+            font-size: 16px;
+            background-color: #2e8b57;
+            color: white;
+            border: none;
+        }
+
+        .btn-custom:hover {
+            background-color: #245d46;
+        }
+
+        .card-deck {
+            margin-top: 30px;
+        }
+
+        .card {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: none;
+        }
+
+        .property-card-img {
+            height: 200px;
+            object-fit: cover;
+        }
+
+        a {
+            text-decoration: none;
+            color: #2e8b57;
+        }
+
+        a:hover {
+            color: #245d46;
+        }
+
+        footer {
+            background-color: #2e8b57;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <div class="container">
+            <a class="navbar-brand" href="#">Property Management</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'property_app:property-list' %}">Properties</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="dashboardDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Dashboards
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="dashboardDropdown">
+                        <a class="dropdown-item" href="{% url 'properties:tenant-dashboard' %}">Tenant</a>
+                        <a class="dropdown-item" href="{% url 'admin:index' %}">Admin</a>
+                        <a class="dropdown-item" href="{% url 'properties:landlord-dashboard' %}">Landlord</a>
+                    </div>
+                </li>
+                    <!-- <li class="nav-item">
+                        <a class="nav-link" href="{% url 'admin:index' %}">Admin Dashboard</a>
+                    </li> -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">Login</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <h1>Welcome to Property Management</h1>
+        <p>Manage properties, tenants, leases, and more, all in one place.</p>
+        <div class="feature-btns">
+            <a href="{% url 'property_app:property_list' %}" class="btn btn-custom">Browse Properties</a>
+            <a href="{% url 'login' %}" class="btn btn-custom">Login</a>
+        </div>
+    </section>
+
+    <!-- Property Listings Section -->
+<section class="container">
+    <h2 class="text-center mb-4">Featured Properties</h2>
+    <div class="row">
+        <!-- Property Card 1 -->
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <img src="https://i.pinimg.com/736x/3f/da/3b/3fda3b2ef33aad8b4bff418027d0aadf.jpg" class="card-img-top property-card-img" alt="Property Image">
+                <div class="card-body">
+                    <h5 class="card-title">Modern Apartment</h5>
+                    <p class="card-text">2 Bedroom | 1 Bath | $1,200/month</p>
+                    <a href="#" class="btn btn-custom" data-toggle="modal" data-property-id="{{ property.id }}">View Details</a>
+                </div>
+            </div>
+        </div>
+        <!-- Property Card 2 -->
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <img src="https://i.pinimg.com/736x/65/9e/86/659e8643f641464fe47cf0185b0f3a2d.jpg" class="card-img-top property-card-img" alt="Property Image">
+                <div class="card-body">
+                    <h5 class="card-title">Cozy Studio</h5>
+                    <p class="card-text">1 Bedroom | 1 Bath | $800/month</p>
+                    <a href="#" class="btn btn-custom">View Details</a>
+                </div>
+            </div>
+        </div>
+        <!-- Property Card 3 -->
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <img src="https://i.pinimg.com/736x/83/ea/c7/83eac76ccc218ff4c83a7e5e25adcc3b.jpg" class="card-img-top property-card-img" alt="Property Image">
+                <div class="card-body">
+                    <h5 class="card-title">Luxury Villa</h5>
+                    <p class="card-text">3 Bedroom | 2 Bath | $2,500/month</p>
+                    <a href="#" class="btn btn-custom">View Details</a>
+                </div>
+            </div>
+        </div>
+        <!-- Property Card 4 -->
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <img src="https://i.pinimg.com/736x/ae/9a/5d/ae9a5dbd2c43390bedffb0344fb0e912.jpg" class="card-img-top property-card-img" alt="Property Image">
+                <div class="card-body">
+                    <h5 class="card-title">Family Home</h5>
+                    <p class="card-text">4 Bedroom | 3 Bath | $1,800/month</p>
+                    <a href="#" class="btn btn-custom">View Details</a>
+                </div>
+            </div>
+        </div>
+        <!-- Property Card 5 -->
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <img src="https://i.pinimg.com/736x/4c/6f/bc/4c6fbc8fe14bd1f45b3a2232836ab27d.jpg" class="card-img-top property-card-img" alt="Property Image">
+                <div class="card-body">
+                    <h5 class="card-title">Urban Condo</h5>
+                    <p class="card-text">2 Bedroom | 2 Bath | $1,500/month</p>
+                    <a href="#" class="btn btn-custom">View Details</a>
+                </div>
+            </div>
+        </div>
+        <!-- Property Card 6 -->
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <img src="https://i.pinimg.com/736x/dd/99/bb/dd99bb60200afa9faa369d1961f2e707.jpg" class="card-img-top property-card-img" alt="Property Image">
+                <div class="card-body">
+                    <h5 class="card-title">Country Cottage</h5>
+                    <p class="card-text">3 Bedroom | 2 Bath | $1,000/month</p>
+                    <a href="#" class="btn btn-custom">View Details</a>
+                </div>
+            </div>
+        </div>
+        <!-- Property Card 7 -->
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <img src="https://i.pinimg.com/736x/7e/6c/4b/7e6c4b0a674c0ce30ba80efe8d043cac.jpg" class="card-img-top property-card-img" alt="Property Image">
+                <div class="card-body">
+                    <h5 class="card-title">Penthouse Suite</h5>
+                    <p class="card-text">3 Bedroom | 3 Bath | $3,000/month</p>
+                    <a href="#" class="btn btn-custom">View Details</a>
+                </div>
+            </div>
+        </div>
+        <!-- Property Card 8 -->
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <img src="https://i.pinimg.com/736x/c2/86/87/c286876cd4982144d22f34d68623bd19.jpg" class="card-img-top property-card-img" alt="Property Image">
+                <div class="card-body">
+                    <h5 class="card-title">Beachside Bungalow</h5>
+                    <p class="card-text">2 Bedroom | 1 Bath | $1,400/month</p>
+                    <a href="#" class="btn btn-custom">View Details</a>
+                </div>
+            </div>
+        </div>
+        <!-- Property Card 9 -->
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <img src="https://i.pinimg.com/736x/b5/62/ab/b562abb47d25a34c4cb45d9e92918515.jpg" class="card-img-top property-card-img" alt="Property Image">
+                <div class="card-body">
+                    <h5 class="card-title">Suburban Retreat</h5>
+                    <p class="card-text">4 Bedroom | 3 Bath | $2,000/month</p>
+                    <a href="#" class="btn btn-custom">View Details</a>
+                </div>
+            </div>
+        </div>
+        <!-- Property Card 10 -->
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <img src="https://i.pinimg.com/736x/ee/c4/54/eec45420a4e8737579a0cabd5b2adcbd.jpg" class="card-img-top property-card-img" alt="Property Image">
+                <div class="card-body">
+                    <h5 class="card-title">City Loft</h5>
+                    <p class="card-text">1 Bedroom | 1 Bath | $1,200/month</p>
+                    <a href="#" class="btn btn-custom">View Details</a>
+                </div>
+            </div>
+        </div>
+        <!-- Property Card 11 -->
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <img src="https://i.pinimg.com/736x/b8/7a/da/b87ada38bf4873b299922f94a4ac3acd.jpg" class="card-img-top property-card-img" alt="Property Image">
+                <div class="card-body">
+                    <h5 class="card-title">Lakeview Cabin</h5>
+                    <p class="card-text">2 Bedroom | 1 Bath | $900/month</p>
+                    <a href="#" class="btn btn-custom">View Details</a>
+                </div>
+            </div>
+        </div>
+        <!-- Property Card 12 -->
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <img src="https://i.pinimg.com/736x/5f/43/6c/5f436ceb9c76a803845ab1b59334c427.jpg" class="card-img-top property-card-img" alt="Property Image">
+                <div class="card-body">
+                    <h5 class="card-title">Historic Townhouse</h5>
+                    <p class="card-text">3 Bedroom | 2 Bath | $2,200/month</p>
+                    <a href="#" class="btn btn-custom">View Details</a>
+                </div>
+            </div>
+        </div>
+    </div>
+<div class="modal fade" id="propertyModal" tabindex="-1" role="dialog" aria-labelledby="propertyModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="propertyModalLabel">Property Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="property-description">Property details will be loaded here...</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
+                <a href="#" id="rent-property" class="btn btn-primary">Rent</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!-- Property Modal -->
+    <div class="modal fade" id="propertyModal" tabindex="-1" role="dialog" aria-labelledby="propertyModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="propertyModalLabel">Property Details</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Property details will be dynamically inserted here -->
+                    <p id="property-description">Loading...</p>
+                </div>
+               <!-- {% for property in properties %}
+                   <div class="modal-footer">
+                       <a href="#" id="back-to-home" class="btn btn-secondary" data-dismiss="modal">OK</a>
+                       <a href="{% url 'property_app:payment_page' property.id %}" id="rent-property" class="btn btn-primary">Rent</a>
+                   </div> 
+                {% endfor %} -->
+                 <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
+                    <a href="#" class="btn btn-primary" id="rent-property">Rent</a>
+                 </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+    <!-- Footer Section -->
+    <footer>
+        <p>&copy; 2024 Property Management Taskmasters. All rights reserved.</p>
+    </footer>
+    
+
+    <!-- Bootstrap JS, Popper.js, and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" crossorigin="anonymous"></script>
+    <script>
+        // JavaScript to handle dynamic data in the modal
+        document.querySelectorAll('.view-details-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const propertyId = this.getAttribute('data-id');
+
+                // Simulate fetching data (replace with an actual AJAX call in a real implementation)
+                const propertyDetails = {
+                    1: 'This is a detailed description of Property 1.',
+                    2: 'This is a detailed description of Property 2.',
+                    3: 'This is a detailed description of Property 3.'
+                };
+
+                document.getElementById('property-description').textContent = propertyDetails[propertyId] || 'No details available.';
+
+                // Update the Rent button link dynamically (if needed)
+                document.getElementById('rent-property').setAttribute('href', `/payment/${propertyId}`);
+            });
+        });
+        document.addEventListener('DOMContentLoaded', () => {
+    const viewDetailsButtons = document.querySelectorAll('.view-details');
+    viewDetailsButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            const propertyId = this.getAttribute('data-property-id');
+            console.log(`Property ID: ${propertyId}`);
+            // Fetch property details via AJAX or API
+            document.getElementById('property-description').innerText = `Details for property ID: ${propertyId}`;
+        });
+    });
+});
+
+    </script>
+</body>
+</html>
+
